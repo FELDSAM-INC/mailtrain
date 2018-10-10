@@ -1,0 +1,34 @@
+version: '2'
+services:
+  mysql:
+    env_file:
+    - ".env"
+    environment:
+    - MYSQL_DATABASE=${MYSQL_DATABASE}
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - MYSQL_USER=${MYSQL_USER}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: always
+  redis:
+    restart: always
+  mailtrain:
+    image: feldhost/mailtrain:v1.24.1-1
+    env_file:
+    - ".env"
+    environment:
+    - MYSQL_DATABASE=${MYSQL_DATABASE}
+    - MYSQL_USER=${MYSQL_USER}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: always
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+    - '80:80'
+    - '443:443'
+    links:
+    - mailtrain
+    restart: always
+    environment:
+      DOMAINS: 'mailtrain.feldhost.cz -> http://mailtrain:3000'
+      # STAGE: 'production'
+      # FORCE_RENEW: 'true
