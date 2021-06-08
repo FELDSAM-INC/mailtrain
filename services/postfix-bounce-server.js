@@ -80,9 +80,7 @@ let server = net.createServer(socket => {
                             }
                         });
                         // save bounced message
-                        // truncate line to 255 chars
-                        let response = line.substring(0, Math.min(255, line.length));
-                        campaigns.updateMessageResponse(message, response, queueId, (err, updated) => {
+                        campaigns.updateMessageResponse(message, line, queueId, (err, updated) => {
                             if (err) {
                                 log.error('POSTFIXBOUNCE', 'Failed updating message response: %s', err && err.stack);
                             } else if (updated) {
