@@ -19,7 +19,7 @@ CREATE TABLE `campaign` (
   `segment` int(11) unsigned NOT NULL,
   `subscription` int(11) unsigned NOT NULL,
   `status` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `response` varchar(255) DEFAULT NULL,
+  `response` text DEFAULT NULL,
   `response_id` varchar(255) CHARACTER SET ascii DEFAULT NULL,
   `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
