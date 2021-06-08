@@ -79,6 +79,14 @@ let server = net.createServer(socket => {
                                 log.verbose('POSTFIXBOUNCE', 'Marked message %s as bounced', queueId);
                             }
                         });
+                        // save bounced message
+                        campaigns.updateMessageResponse(message, line, queueId, (err, updated) => {
+                            if (err) {
+                                log.error('POSTFIXBOUNCE', 'Failed updating message response: %s', err && err.stack);
+                            } else if (updated) {
+                                log.verbose('POSTFIXBOUNCE', 'Successfully changed message response: %s', queueId);
+                            }
+                        });
                     }
 
                     // No need to keep in memory... free it ( thanks @witzig )
